@@ -1,10 +1,5 @@
 const express = require("express");
-let router = express.router();
-
-router
-  .route("/")
-  .get((req, res) => {})
-  .post((req, res) => {});
+let router = express.Router();
 
 router
   .route("/:id")

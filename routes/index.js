@@ -1,7 +1,7 @@
 const express = require("express");
-const shortUrl = require("./routes/shorturl.js")
-const statistic = require("./routes/statistic.js")
-let router = express.router();
+const shortUrl = require("./shorturl")
+const statistic = require("./statistic")
+let router = express.Router();
 
 router.use("/shorturl", shortUrl);
 router.use("/statistic", statistic);

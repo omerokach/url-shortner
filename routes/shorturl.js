@@ -1,13 +1,15 @@
 const express = require("express");
-let router = express.router();
+let router = express.Router();
 
 router
   .route("/")
-  .get((req, res) => {res.send("this is shorturl")})
+  .get((req, res) => {
+    res.send("this is shorturl");
+  })
   .post((req, res) => {});
 
 router
-  .route("/:id")
+  .route("/:shorturl-id")
   .get((req, res) => {})
   .put((req, res) => {});
 
