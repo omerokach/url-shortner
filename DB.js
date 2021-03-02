@@ -6,7 +6,7 @@ class Database {
     }
     creatNewShortenedUrl(url){
         const newUrlObject = {};
-        newUrlObject.creationDate = new Date();
+        newUrlObject.creationDate = clearDate(new Date());
         newUrlObject.redirectCount = 0;
         originalUrl = url
         newUrlObject["shorturl-id"];
@@ -14,4 +14,10 @@ class Database {
     getAllUrls() {};
     getSpecificUrl() {};
     updateUrl () {};
+}
+
+//Sql date
+function clearDate(date){
+    let newDate = (date.toISOString()).split(".")[0];
+    return newDate.split("T")[0] + " " + newDate.split("T")[1]; 
 }
