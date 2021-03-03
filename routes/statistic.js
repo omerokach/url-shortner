@@ -7,10 +7,7 @@ router
   .get((req, res) => {
     const id = req.params.id;
     const { urlArr } = dataBase.getAllUrls();
-    const url = urlArr.filter((url) => {
-      console.log(url);
-      return url.shorturl_Id === id;
-    });
+    const url = urlArr.filter((url) => url.shorturl_Id === id);
     res.json(url);
   })
   .put((req, res) => {});
