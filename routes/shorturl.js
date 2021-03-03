@@ -3,9 +3,13 @@ let router = express.Router();
 const dataBase = require("../DBClass");
 
 router.post("/new", (req, res) => {
-    const url = req.body.url;
-    res.json(url);
-  });
+  const url = req.body.url;
+  const newShort = dataBase.creatNewShortenedUrl(url);
+  const { original_Url: original } = newShort;
+  const { shorturl_Id: short } = newShort;
+  const message = { original_Url: original, short_Url: short };
+  res.json(message);
+});
 
 router.get("/:shorturlId", (req, res) => {
   const { shorturlId } = req.params;

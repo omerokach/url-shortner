@@ -16,15 +16,15 @@ class DataBase {
       throw new Error(`invalid url`);
     }
     for (let item of this.urlObject.urlArr) {
-      if (item.originalUrl === url) {
+      if (item.original_Url === url) {
         return item;
       }
     }
     const newUrlObject = {};
-    newUrlObject.creationDate = clearDate(new Date());
-    newUrlObject.redirectCount = 0;
-    newUrlObject.originalUrl = url;
-    newUrlObject.shorturlId = shortenedUrl();
+    newUrlObject.creation_Date = clearDate(new Date());
+    newUrlObject.redirect_Count = 0;
+    newUrlObject.original_Url = url;
+    newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
     fs.writeFile(
       `./database.json`,
@@ -44,9 +44,9 @@ class DataBase {
 
   updateRedirect(shorturlId) {
     const index = this.urlObject.urlArr.findIndex((url) => {
-      return url.shorturlId === shorturlId;
+      return url.shorturl_Id === shorturlId;
     });
-    this.urlObject.urlArr[index].redirectCount += 1;
+    this.urlObject.urlArr[index].redirect_Count += 1;
     fs.writeFile(
       `./database.json`,
       JSON.stringify(this.urlObject, null, 4),
@@ -60,9 +60,9 @@ class DataBase {
 
   getOriginalUrl(id) {
     const url = this.urlObject.urlArr.filter((url) => {
-      return url.shorturlId === id;
+      return url.shorturl_Id === id;
     });
-    return url[0].originalUrl;
+    return url[0].original_Url;
   }
 
   updateUrl() {}
