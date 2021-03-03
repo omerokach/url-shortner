@@ -1,9 +1,8 @@
 const fs = require("fs");
-// const path = process.env === 'test'? 'test' : 'database';  
 
 class DataBase {
   constructor() {
-    fs.readFile("./DB/database.json", (err, data) => {
+    fs.readFile("./DB/test.json", (err, data) => {
       if (err) {
         throw new Error(`message: ${err.message}`);
       } else {
@@ -27,7 +26,7 @@ class DataBase {
     newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
     fs.writeFile(
-      `./DB/database.json`,
+      `./DB/test.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {
@@ -48,7 +47,7 @@ class DataBase {
     });
     this.urlObject.urlArr[index].redirect_Count += 1;
     fs.writeFile(
-      `./DB/database.json`,
+      `./DB/test.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {

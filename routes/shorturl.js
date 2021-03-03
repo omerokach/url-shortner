@@ -1,7 +1,6 @@
 const express = require("express");
 let router = express.Router();
 const dataBase = require("../DBClass");
-const isValidDomain = require("is-valid-domain");
 const validator = require("validator");
 
 router.post("/new", (req, res) => {
@@ -27,6 +26,10 @@ router.get("/:shorturlId", (req, res) => {
     res.status(400).send(err.message)
   }
 });
+router.get("/", (req, res) => {
+  res.send("hello");
+});
+
 
 
 module.exports = router;
