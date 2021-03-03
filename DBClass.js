@@ -3,7 +3,7 @@ const isValidDomain = require("is-valid-domain");
 
 class DataBase {
   constructor() {
-    fs.readFile("./database.json", (err, data) => {
+    fs.readFile("./DB/database.json", (err, data) => {
       if (err) {
         throw new Error(`message: ${err.message}`);
       } else {
@@ -27,7 +27,7 @@ class DataBase {
     newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
     fs.writeFile(
-      `./database.json`,
+      `./DB/database.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {
@@ -48,7 +48,7 @@ class DataBase {
     });
     this.urlObject.urlArr[index].redirect_Count += 1;
     fs.writeFile(
-      `./database.json`,
+      `./DB/database.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {
@@ -66,10 +66,6 @@ class DataBase {
   }
 
   updateUrl() {}
-}
-
-function ifValidDomain(url) {
-  return isValidDomain(url);
 }
 
 //Sql date
