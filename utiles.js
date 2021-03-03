@@ -1,39 +1,28 @@
 const axios = require("axios");
-
-function getRequest(data){
-    axios.get( `https://api.jsonbin.io/v3/b` ,{
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json" 
-        },  
-      } ).then((response) => {
-          return response.send(response);
-      })
-}
-
-function postRequest(data){
-    axios.post( `https://api.jsonbin.io/v3/b` ,{
-        method: 'POST',
-        headers: {
-        "Content-Type": "application/json", 
-        "X-Master-Key": "$2b$10$w1piqKtT3h7v/fsuAVZjferrU.eP4x9ZpkAtxxytBDo9tYxNv8YMK",
-        "X-BIN-PRIVATE": false
+const binID = "603e690e81087a6a8b94ba0f";
+function getRequest(data) {
+  axios
+    .get(`https://api.jsonbin.io/v3/b/${binID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({data})  
-    } ).then((response) =>{
-        response.send(response);
-        return response;
     })
+    .then((response) => {
+      return response.send(response);
+    });
 }
 
-function putRequest(data, id){
-    axios.put(`https://api.jsonbin.io/v3/b/${id}`,{
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json",
-            "X-Bin-Versioning": true, 
-            "X-Master-Key": "$2b$10$w1piqKtT3h7v/fsuAVZjferrU.eP4x9ZpkAtxxytBDo9tYxNv8YMK" 
-        },
-        body: JSON.stringify({data}),
-    }).then((response) => {response.send(response)});
+function putRequest(data, id) {
+  axios
+    .put(`https://api.jsonbin.io/v3/b/${binID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data }),
+    })
+    .then((response) => {
+      response.send(response);
+    });
 }
