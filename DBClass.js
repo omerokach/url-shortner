@@ -1,6 +1,6 @@
 const fs = require("fs");
 const isValidDomain = require("is-valid-domain");
-  
+
 class DataBase {
   constructor() {
     fs.readFile("./database.json", (err, data) => {
@@ -12,8 +12,8 @@ class DataBase {
     });
   }
   creatNewShortenedUrl(url) {
-    if (isValidDomain(url)) {
-      throw new Error(`invalid url`);
+    if (ifValidDomain(url)) {
+      return false;
     }
     for (let item of this.urlObject.urlArr) {
       if (item.original_Url === url) {
@@ -66,10 +66,10 @@ class DataBase {
   }
 
   updateUrl() {}
+}
 
-  isValidDomain(url) {
-    return isValidDomain(url);
-  }
+function ifValidDomain(url) {
+  return isValidDomain(url);
 }
 
 //Sql date

@@ -20,7 +20,7 @@ function putRequest(data, id) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ "urlArr" : [data] }),
     })
     .then((response) => {
       response.send(response);
