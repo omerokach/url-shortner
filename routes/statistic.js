@@ -1,14 +1,20 @@
 const express = require("express");
 let router = express.Router();
 const dataBase = require("../DBClass");
+const {checkShortId} = require("../urlValidation") 
 
 router
   .route("/:id")
   .get((req, res) => {
-    const id = req.params.id;
-    const { urlArr } = dataBase.getAllUrls();
-    const url = urlArr.filter((url) => url.shorturl_Id === id);
-    res.json(url);
+    try{
+      const id = req.params.id;
+      checkShortId(id)
+      const { urlArr } = dataBase.getAllUrls();
+      const url = urlArr.filter((url) => url.shorturl_Id === id);
+      res.json(url);
+    }catch (e){
+      res.status(400).send("no such id")
+    }
   })
   .put((req, res) => {});
 

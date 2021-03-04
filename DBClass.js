@@ -5,19 +5,9 @@ class DataBase {
   constructor() {
     const data = fs.readFileSync(`./DB/${path}.json`);
     this.urlObject = JSON.parse(data);
-    // fs.readFile(`./DB/${path}.json`, (err, data) => {
-    //   if (err) {
-    //     throw new Error(`message: ${err.message}`);
-    //   } else {
-    //     this.urlObject = JSON.parse(data);
-    //   }
-    // });
   }
   creatNewShortenedUrl(url) {
-    console.log(process.env.NODE_ENV);
-    console.log("this obj", this.urlObject.urlArr);
     for (let item of this.urlObject.urlArr) {
-      console.log("url in creat func", url);
       if (item.original_Url === url) {
         return item;
       }
@@ -28,7 +18,6 @@ class DataBase {
     newUrlObject.original_Url = url;
     newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
-    console.log(newUrlObject);
     fs.writeFile(
       `./DB/${path}.json`,
       JSON.stringify(this.urlObject, null, 4),
@@ -39,7 +28,7 @@ class DataBase {
       }
     );
     return newUrlObject;
-  }
+    }
 
   getAllUrls() {
     return this.urlObject;
@@ -68,7 +57,26 @@ class DataBase {
     return url[0].original_Url;
   }
 
-  updateUrl() {}
+  getShortUrl(originalUrl) {
+    const url = this.urlObject.urlArr.filter((url) => {
+      return url.original_Url === originalUrl;
+    });
+    return url[0].shorturl_Id;
+  }
+
+  getRedirect(originalUrl) {
+    const url = this.urlObject.urlArr.filter((url) => {
+      return url.redirect_Count === originalUrl;
+    });
+    return url[0].redirect_Count;
+  }
+
+  getDate(originalUrl) {
+    const url = this.urlObject.urlArr.filter((url) => {
+      return url.creation_Date === originalUrl;
+    });
+    return url[0].creation_Date;
+  }
 }
 
 //Sql date
