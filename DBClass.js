@@ -1,21 +1,23 @@
 const fs = require("fs");
-// const path = process.env === 'test'? 'test' : 'database';  
+const path = process.env.NODE_ENV === "test" ? "test" : "database";
 
 class DataBase {
   constructor() {
-    fs.readFile("./DB/database.json", (err, data) => {
-      if (err) {
-        throw new Error(`message: ${err.message}`);
-      } else {
-        this.urlObject = JSON.parse(data);
-      }
-    });
+    const data = fs.readFileSync(`./DB/${path}.json`);
+    this.urlObject = JSON.parse(data);
+    // fs.readFile(`./DB/${path}.json`, (err, data) => {
+    //   if (err) {
+    //     throw new Error(`message: ${err.message}`);
+    //   } else {
+    //     this.urlObject = JSON.parse(data);
+    //   }
+    // });
   }
   creatNewShortenedUrl(url) {
-    if (ifValidDomain(url)) {
-      return false;
-    }
+    console.log(process.env.NODE_ENV);
+    console.log("this obj", this.urlObject.urlArr);
     for (let item of this.urlObject.urlArr) {
+      console.log("url in creat func", url);
       if (item.original_Url === url) {
         return item;
       }
@@ -26,8 +28,9 @@ class DataBase {
     newUrlObject.original_Url = url;
     newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
+    console.log(newUrlObject);
     fs.writeFile(
-      `./DB/database.json`,
+      `./DB/${path}.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {
@@ -48,7 +51,7 @@ class DataBase {
     });
     this.urlObject.urlArr[index].redirect_Count += 1;
     fs.writeFile(
-      `./DB/database.json`,
+      `./DB/${path}.json`,
       JSON.stringify(this.urlObject, null, 4),
       (err) => {
         if (err) {
