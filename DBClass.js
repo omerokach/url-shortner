@@ -1,10 +1,31 @@
+const { default: axios } = require("axios");
 const fs = require("fs");
-const path = process.env.NODE_ENV === "test" ? "test" : "database";
+const binID = "6041fb060866664b10892272";
+const binIdTest = "6041fb4c0866664b10892298";
+const database = "database";
+const test = "test";
+const LocalPath = process.env.NODE_ENV === "test" ? test : database;
+const path = process.env.NODE_ENV === "test" ? binIdTest : binID;
 
 class DataBase {
   constructor() {
-    const data = fs.readFileSync(`./DB/${path}.json`);
-    this.urlObject = JSON.parse(data);
+    try {
+      axios.get(`https://api.jsonbin.io/v3/b/${path}/latest`).then((res) => {
+        const json = res.data.record;
+        this.urlObject = json;
+      });
+      if (process.env.NODE_ENV === "test") {
+        try {
+          const data = fs.readFileSync(`./DB/test.json`);
+          this.urlObject = JSON.parse(data);
+        } catch (e) {
+          throw new Error(e);
+        }
+      }
+    } catch (err) {
+      const data = fs.readFileSync(`./DB/database.json`);
+      this.urlObject = JSON.parse(data);
+    }
   }
   creatNewShortenedUrl(url) {
     for (let item of this.urlObject.urlArr) {
@@ -18,17 +39,38 @@ class DataBase {
     newUrlObject.original_Url = url;
     newUrlObject.shorturl_Id = shortenedUrl();
     this.urlObject.urlArr.push(newUrlObject);
-    fs.writeFile(
-      `./DB/${path}.json`,
-      JSON.stringify(this.urlObject, null, 4),
-      (err) => {
-        if (err) {
-          throw new Error(`message: ${err}`);
+    try {
+      axios.put(
+        `https://api.jsonbin.io/v3/b/${path}`,
+        JSON.stringify(this.urlObject, null, 4),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }
-    );
-    return newUrlObject;
+      );
+      fs.writeFile(
+        `./DB/${LocalPath}.json`,
+        JSON.stringify(this.urlObject, null, 4),
+        (err) => {
+          if (err) {
+            throw new Error(`message: ${err}`);
+          }
+        }
+      );
+    } catch (err) {
+      fs.writeFile(
+        `./DB/${LocalPath}.json`,
+        JSON.stringify(this.urlObject, null, 4),
+        (err) => {
+          if (err) {
+            throw new Error(`message: ${err}`);
+          }
+        }
+      );
     }
+    return newUrlObject;
+  }
 
   getAllUrls() {
     return this.urlObject;
@@ -39,15 +81,36 @@ class DataBase {
       return url.shorturl_Id === shorturlId;
     });
     this.urlObject.urlArr[index].redirect_Count += 1;
-    fs.writeFile(
-      `./DB/${path}.json`,
-      JSON.stringify(this.urlObject, null, 4),
-      (err) => {
-        if (err) {
-          throw new Error(`message: ${err}`);
+    try {
+      axios.put(
+        `https://api.jsonbin.io/v3/b/${path}`,
+        JSON.stringify(this.urlObject, null, 4),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }
-    );
+      );
+      fs.writeFile(
+        `./DB/${LocalPath}.json`,
+        JSON.stringify(this.urlObject, null, 4),
+        (err) => {
+          if (err) {
+            throw new Error(`message: ${err}`);
+          }
+        }
+      );
+    } catch {
+      fs.writeFile(
+        `./DB/${LocalPath}.json`,
+        JSON.stringify(this.urlObject, null, 4),
+        (err) => {
+          if (err) {
+            throw new Error(`message: ${err}`);
+          }
+        }
+      );
+    }
   }
 
   getOriginalUrl(id) {

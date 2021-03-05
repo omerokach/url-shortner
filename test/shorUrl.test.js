@@ -32,6 +32,7 @@ describe("testing the POST method", () => {
 
   it("should post new url and saved in data base", async () =>{
     const data = JSON.parse(fs.readFileSync('./DB/test.json'));
+    console.log(data)
     expect(data.urlArr[0]['original_Url']).toBe('http://www.exampletest.com');
   });
 
