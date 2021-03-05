@@ -26,7 +26,8 @@ router.get("/:shorturlId", (req, res) => {
     dataBase.updateRedirect(shorturlId);
     res.redirect(originalUrl, 302);
   } catch (err) {
-    res.status(400).send("Invalid Id");
+    res.status(400).json({ message: err });
+    // res.status(400).send("Invalid Id");
   }
 });
 

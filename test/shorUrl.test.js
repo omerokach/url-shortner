@@ -66,7 +66,6 @@ describe("testing the GET method to the statistic route", () => {
     it("should return the statistics of a specific url with creation date, original url, short url and redirect counter", async () => {
         const shorturl = dataBase.getShortUrl('http://www.exampletest.com');
         const response = await request(app).get(`/api/statistic/${shorturl}`);  
-        console.log(response.body[0])
         expect(response.status).toBe(200);
         expect(response.body[0]["creation_Date"]).toBeDefined();
         expect(response.body[0]["redirect_Count"]).toBeDefined();
