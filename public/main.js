@@ -1,41 +1,68 @@
 const userUrl = document.getElementById("url_input");
 const shortUrl = document.getElementById("shortUrl_input");
-document.getElementById("submit").addEventListener("click", async (e) => {
+const table = document.getElementById("shortUrlTable");
+const urlArr = [];
+document.getElementById("submit").addEventListener("click", (e) => {
   e.preventDefault();
-  console.log(userUrl);
   let url = userUrl.value;
-  await postRequest(url);
+  postRequest(url);
 });
-document.getElementById("shortUrlSubmit").addEventListener("click", async (e) => {
+
+document.getElementById("shortUrlSubmit").addEventListener("click", (e) => {
   e.preventDefault();
   let shortUrlInput = shortUrl.value;
-  console.log(shortUrlInput)
-  await getRequest(shortUrlInput);
-})
+  console.log(shortUrlInput);
+  getStatistic(shortUrlInput);
+  getRequest(shortUrlInput);
+});
 
-// function getRequest(data) {
-//   console.log(data)
-//   axios({
-//     method: "GET",
-//     url: `http://localhost:3000/api/shorturl/${data}`
-//   }).then((response) => {
-//     console.log(response)
-//     if (response.request.status === 200) {
-//         window.open(response.request.responseURL);  
-//     } else if (response.data.redirect == 'http://localhost:3000/api/shorturl'){
-//         window.location = "http://localhost:3000/api/shorturl"
-//     }
-// })
-// }
+function getRequest(shortUrl) {
+  console.log(shortUrl);
+  axios({
+    method: "GET",
+    url: `http://localhost:3000/api/shorturl/${shortUrl}`,
+  }).then((response) => {
+    if (response.request.status === 200) {
+      window.open(response.request.responseURL);
+    } else if (response.data.redirect == "http://localhost:3000/api/shorturl") {
+      window.location = "http://localhost:3000/api/shorturl";
+    }
+  });
+}
 
-async function postRequest(url) {
+function getStatistic(shortId) {
+  axios({
+    method: "GET",
+    url: `http://localhost:3000/api/statistic/${shortId}`,
+  }).then((res) => {
+    urlArr.push(res.data[0]);
+    console.log(urlArr)
+  });
+}
+
+function postRequest(url) {
   try {
-    const res = await axios({
+    axios({
       method: "POST",
       url: `http://localhost:3000/api/shorturl/new`,
       data: { url: url },
-    });
+    }).then((res) => {
+      getStatistic(res.data["short_Url"]);
+    })
   } catch (e) {
     throw e.response.data.message;
+  }
+}
+
+function objToTable(urlObj){
+
+}
+function creatRow(url, shortUrl, numOfRedirect, date) {
+  const arr = [url, shortUrl, numOfRedirect, date];
+  const tr = document.createElement("tr");
+  for (let i = 0; i < 4; i++) {
+    const td = document.createElement("td");
+    td.innerText = arr[i];
+    tr.appendChild(td);
   }
 }
