@@ -1,19 +1,37 @@
 const userUrl = document.getElementById("url_input");
 const shortUrl = document.getElementById("shortUrl_input");
 const table = document.querySelector("table");
-const urlArr = [];
+let urlArr = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  axios({
+    method: "GET",
+    url: "http://localhost:3000/api/shorturl",
+  }).then((response) => {
+    console.log(response.data.urlArr);
+    urlArr = [...response.data.urlArr];
+    console.log(urlArr);
+    generateTable(table, response.data.urlArr);
+  });
+});
+
 document.getElementById("submit").addEventListener("click", (e) => {
   e.preventDefault();
   let url = userUrl.value;
   postRequest(url);
 });
 
-document.getElementById("shortUrlSubmit").addEventListener("click", (e) => {
+document.getElementById("goToUrl").addEventListener("click", (e) => {
   e.preventDefault();
   let shortUrlInput = shortUrl.value;
-  console.log(shortUrlInput);
-  getStatistic(shortUrlInput);
   getRequest(shortUrlInput);
+  let obj = urlArr.find(
+    (urlObject) => urlObject["shorturl_Id"] === shortUrlInput
+  );
+  const redirectCounter = obj["redirect_Count"];
+  const urlRow = document.getElementById(obj["original_Url"]);
+  const rowTd = urlRow.querySelectorAll("td");
+  rowTd[1].innerText = redirectCounter + 1;
 });
 
 function getRequest(shortUrl) {
@@ -36,6 +54,7 @@ function getStatistic(shortId) {
     url: `http://localhost:3000/api/statistic/${shortId}`,
   }).then((res) => {
     urlArr.push(res.data[0]);
+    localStorage.setItem("urlArr", JSON.stringify(urlArr));
     // const {short_Url, original_Url, creation_Date, redirect_Count} = res.data[0];
     console.log(urlArr);
     generateTable(table, urlArr);
@@ -56,21 +75,13 @@ function postRequest(url) {
   }
 }
 
-function objToTable(urlObj) {}
-function creatRow(url, shortUrl, numOfRedirect, date) {
-  console.log(url);
-  const arr = [url, shortUrl, numOfRedirect, date];
-  const tr = document.createElement("tr");
-  for (let i = 0; i < 4; i++) {
-    const td = document.createElement("td");
-    td.innerText = arr[i];
-    tr.appendChild(td);
-  }
-}
-function generateTable(table, data) {
-  for (let element of data) {
+function generateTable(table, urlArr) {
+  for (let element of urlArr) {
     let row = table.insertRow();
     for (key in element) {
+      if (key === "original_Url") {
+        row.setAttribute("id", element[key]);
+      }
       let cell = row.insertCell();
       let text = document.createTextNode(element[key]);
       cell.appendChild(text);

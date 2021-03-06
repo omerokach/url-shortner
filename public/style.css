@@ -36,6 +36,7 @@ label {
 
 input {
   padding: 5px;
+  margin: 0.3em;
 }
 
 input[type="text"] {
@@ -45,4 +46,11 @@ input[type="text"] {
 table {
   margin: auto;
   text-align: center;
+  border: 1px solid black;
+  border-radius: 1em;
+  padding: 2em;
+}
+td{
+  border-bottom: 1px solid black;
+  margin-left: 2em;
 }
