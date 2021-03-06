@@ -1,6 +1,6 @@
 const userUrl = document.getElementById("url_input");
 const shortUrl = document.getElementById("shortUrl_input");
-const table = document.getElementById("shortUrlTable");
+const table = document.querySelector("table");
 const urlArr = [];
 document.getElementById("submit").addEventListener("click", (e) => {
   e.preventDefault();
@@ -36,7 +36,9 @@ function getStatistic(shortId) {
     url: `http://localhost:3000/api/statistic/${shortId}`,
   }).then((res) => {
     urlArr.push(res.data[0]);
-    console.log(urlArr)
+    // const {short_Url, original_Url, creation_Date, redirect_Count} = res.data[0];
+    console.log(urlArr);
+    generateTable(table, urlArr);
   });
 }
 
@@ -48,21 +50,30 @@ function postRequest(url) {
       data: { url: url },
     }).then((res) => {
       getStatistic(res.data["short_Url"]);
-    })
+    });
   } catch (e) {
     throw e.response.data.message;
   }
 }
 
-function objToTable(urlObj){
-
-}
+function objToTable(urlObj) {}
 function creatRow(url, shortUrl, numOfRedirect, date) {
+  console.log(url);
   const arr = [url, shortUrl, numOfRedirect, date];
   const tr = document.createElement("tr");
   for (let i = 0; i < 4; i++) {
     const td = document.createElement("td");
     td.innerText = arr[i];
     tr.appendChild(td);
+  }
+}
+function generateTable(table, data) {
+  for (let element of data) {
+    let row = table.insertRow();
+    for (key in element) {
+      let cell = row.insertCell();
+      let text = document.createTextNode(element[key]);
+      cell.appendChild(text);
+    }
   }
 }
