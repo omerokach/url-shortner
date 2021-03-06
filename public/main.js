@@ -1,18 +1,11 @@
 const userUrl = document.getElementById("url_input");
 const shortUrl = document.getElementById("shortUrl_input");
 const table = document.querySelector("table");
+const alertContainer = document.getElementById("alertContainer");
 let urlArr = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  axios({
-    method: "GET",
-    url: "http://localhost:3000/api/shorturl",
-  }).then((response) => {
-    console.log(response.data.urlArr);
-    urlArr = [...response.data.urlArr];
-    console.log(urlArr);
-    generateTable(table, response.data.urlArr);
-  });
+  getAndPrintAllUrls();
 });
 
 document.getElementById("submit").addEventListener("click", (e) => {
@@ -34,6 +27,16 @@ document.getElementById("goToUrl").addEventListener("click", (e) => {
   rowTd[1].innerText = redirectCounter + 1;
 });
 
+function getAndPrintAllUrls() {
+  axios({
+    method: "GET",
+    url: "http://localhost:3000/api/shorturl",
+  }).then((response) => {
+    urlArr = [...response.data.urlArr];
+    generateTable(table, response.data.urlArr);
+  });
+}
+
 function getRequest(shortUrl) {
   console.log(shortUrl);
   axios({
@@ -53,26 +56,41 @@ function getStatistic(shortId) {
     method: "GET",
     url: `http://localhost:3000/api/statistic/${shortId}`,
   }).then((res) => {
+    const urlArr = [];
     urlArr.push(res.data[0]);
-    localStorage.setItem("urlArr", JSON.stringify(urlArr));
-    // const {short_Url, original_Url, creation_Date, redirect_Count} = res.data[0];
-    console.log(urlArr);
     generateTable(table, urlArr);
   });
 }
 
 function postRequest(url) {
-  try {
-    axios({
-      method: "POST",
-      url: `http://localhost:3000/api/shorturl/new`,
-      data: { url: url },
-    }).then((res) => {
+  axios({
+    method: "POST",
+    url: `http://localhost:3000/api/shorturl/new`,
+    data: { url: url },
+  })
+    .then((res) => {
       getStatistic(res.data["short_Url"]);
+    })
+    .catch((err) => {
+      if ((err.response.data.message = "invalid url")) {
+        alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> invalid URL, type a correct one.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`;
+      }
+      if ((err.response.data.message = "invalid host name")) {
+        alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> invalid host name, type a correct one.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`;
+      }
+      if ((err.response.data.message = "url already exist")) {
+        alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> already exist!, type a new one or use the one down here.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`;
+      }
     });
-  } catch (e) {
-    throw e.response.data.message;
-  }
 }
 
 function generateTable(table, urlArr) {

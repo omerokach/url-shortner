@@ -4,9 +4,15 @@ const dataBase = require("../DBClass");
 const validator = require("validator");
 const fetch = require("node-fetch");
 const { isUrlVaild, checkShortId } = require("../urlValidation");
+const { urlObject } = require("../DBClass");
 
 router.post("/new", async (req, res) => {
   const url = req.body.url;
+  if (
+    dataBase.urlObject.urlArr.find((urlObj) => urlObj["original_Url"] === url)
+  ) {
+    return res.status(400).json({ message: "url already exist" });
+  }
   try {
     await isUrlVaild(url);
     const newShort = dataBase.creatNewShortenedUrl(url);
@@ -15,7 +21,8 @@ router.post("/new", async (req, res) => {
     const message = { original_Url: original, short_Url: short };
     res.status(200).json(message);
   } catch (err) {
-    res.status(400).json({ message: err });
+    console.log(err)
+    res.status(400).json({ error: `${err}` });
   }
 });
 
@@ -32,10 +39,7 @@ router.get("/:shorturlId", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  console.log(dataBase.getAllUrls());
   res.status(200).json(dataBase.getAllUrls());
-  // const urlArray = dataBase.getAllUrls();
-  // res.status(200).json({urlArray});
 });
 
 module.exports = router;

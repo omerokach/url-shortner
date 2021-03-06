@@ -5,6 +5,13 @@ body {
   background-color: #fff;
   text-align: center;
   line-height: 1.4em;
+  background-color: #ff75a0;
+}
+input[type="submit"] {
+  background-color: #eaffd0;
+}
+input[type="text"] {
+  background-color: #95e1d3;
 }
 
 main {
@@ -25,6 +32,9 @@ a {
 }
 
 form {
+  background-color: #fce38a;
+  border: 1px solid black;
+  border-radius: 1em;
   margin: 10px auto;
   padding: 20px;
   max-width: 600px;
@@ -44,13 +54,13 @@ input[type="text"] {
   text-align: center;
 }
 table {
+  background-color: #fce38a;
   margin: auto;
   text-align: center;
-  border: 1px solid black;
   border-radius: 1em;
   padding: 2em;
 }
-td{
+td {
   border-bottom: 1px solid black;
   margin-left: 2em;
 }

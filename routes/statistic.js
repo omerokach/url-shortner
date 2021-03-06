@@ -13,7 +13,7 @@ router
       const url = urlArr.filter((url) => url.shorturl_Id === id);
       res.json(url);
     }catch (e){
-      res.status(400).send("no such id")
+      res.status(400).json({message: "no such id"})
     }
   })
   .put((req, res) => {});
