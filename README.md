@@ -1,9 +1,5 @@
 # ![Scale-Up Velocity](./readme-files/logo-main.png) Final 1 - URL shortner 📎
 
-In this project you will create your own [URL shortener](https://en.wikipedia.org/wiki/URL_shortening)!
-
-This repository includes a basic template for starting the project:
-
 ## my url-shortner app
 
 you can copy ant link you would like to short and pass it in the url input off the app, the app will return you a string of 5 chars
