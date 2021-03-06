@@ -1,34 +1,10 @@
 {
     "urlArr": [
         {
-            "creation_Date": "2021-03-06 14:17:17",
-            "redirect_Count": 0,
+            "creation_Date": "2021-03-06 16:28:24",
+            "redirect_Count": 4,
             "original_Url": "https://www.facebook.com/",
-            "shorturl_Id": "nt64t"
-        },
-        {
-            "creation_Date": "2021-03-06 14:18:10",
-            "redirect_Count": 0,
-            "original_Url": "https://www.google.com/",
-            "shorturl_Id": "hbc4h"
-        },
-        {
-            "creation_Date": "2021-03-06 14:20:03",
-            "redirect_Count": 0,
-            "original_Url": "https://www.google.co.il/",
-            "shorturl_Id": "g9ylm"
-        },
-        {
-            "creation_Date": "2021-03-06 14:21:51",
-            "redirect_Count": 0,
-            "original_Url": "https://www.twitter.com/",
-            "shorturl_Id": "zc3m1"
-        },
-        {
-            "creation_Date": "2021-03-06 14:22:00",
-            "redirect_Count": 0,
-            "original_Url": "https://www.youtube.com/",
-            "shorturl_Id": "jlg4d"
+            "shorturl_Id": "3cska"
         }
     ]
 }

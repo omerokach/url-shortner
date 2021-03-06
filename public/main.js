@@ -38,7 +38,6 @@ function getAndPrintAllUrls() {
 }
 
 function getRequest(shortUrl) {
-  console.log(shortUrl);
   axios({
     method: "GET",
     url: `http://localhost:3000/api/shorturl/${shortUrl}`,
@@ -72,19 +71,20 @@ function postRequest(url) {
       getStatistic(res.data["short_Url"]);
     })
     .catch((err) => {
-      if ((err.response.data.message = "invalid url")) {
+      console.log(err.response.data.message);
+      if (err.response.data.message === "invalid url") {
         alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Holy guacamole!</strong> invalid URL, type a correct one.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>`;
       }
-      if ((err.response.data.message = "invalid host name")) {
+      if (err.response.data.message === "invalid host name") {
         alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Holy guacamole!</strong> invalid host name, type a correct one.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>`;
       }
-      if ((err.response.data.message = "url already exist")) {
+      if (err.response.data.message === "url already exist") {
         alertContainer.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Holy guacamole!</strong> already exist!, type a new one or use the one down here.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

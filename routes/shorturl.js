@@ -21,8 +21,7 @@ router.post("/new", async (req, res) => {
     const message = { original_Url: original, short_Url: short };
     res.status(200).json(message);
   } catch (err) {
-    console.log(err)
-    res.status(400).json({ error: `${err}` });
+    res.status(400).json({ message: `${err}` });
   }
 });
 
