@@ -14,7 +14,7 @@ you can type it in the short url input and go to the url with the "GoTo URL" but
 all the work was about practice client side and the backend and data base side. all the data in the app is saved in a web data base "json bin", and in local in the client files as json files.
 all the app self and auto tested by "jest" and "super test".
 
-![Scale-Up Velocity](./readme-files/urlShortnerRedirectCounter.gif)
+![Scale-Up Velocity](./readme-files/clientError.gif)
 
 ## some of the extras
 - i used json bin web and the local files for keeping the data persistent.
@@ -22,4 +22,5 @@ all the app self and auto tested by "jest" and "super test".
 - Used supertest/puppeteer test to test my bonus feature i implemented. 
 - errors shown for the client clearly and accurately for the problem.
 
+![Scale-Up Velocity](./readme-files/urlShortnerRedirectCounter.gif)
 
