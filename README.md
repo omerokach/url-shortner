@@ -1,4 +1,5 @@
 # ![Scale-Up Velocity](./readme-files/logo-main.png) Final 1 - URL shortner 📎
+here a link to my url-shortner in replit. "https://url-shortner.omerokach.repl.co/"
 
 ## my url-shortner app
 
