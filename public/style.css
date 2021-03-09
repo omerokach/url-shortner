@@ -5,6 +5,13 @@ body {
   background-color: #fff;
   text-align: center;
   line-height: 1.4em;
+  background-color: #ff75a0;
+}
+input[type="submit"] {
+  background-color: #eaffd0;
+}
+input[type="text"] {
+  background-color: #95e1d3;
 }
 
 main {
@@ -16,8 +23,6 @@ h3 {
   margin-top: 30px;
 }
 
-
-
 .user-stories li {
   margin-bottom: 1em;
 }
@@ -27,6 +32,9 @@ a {
 }
 
 form {
+  background-color: #fce38a;
+  border: 1px solid black;
+  border-radius: 1em;
   margin: 10px auto;
   padding: 20px;
   max-width: 600px;
@@ -38,9 +46,21 @@ label {
 
 input {
   padding: 5px;
+  margin: 0.3em;
 }
 
-input[type='text'] {
+input[type="text"] {
   width: 220px;
   text-align: center;
+}
+table {
+  background-color: #fce38a;
+  margin: auto;
+  text-align: center;
+  border-radius: 1em;
+  padding: 2em;
+}
+td {
+  border-bottom: 1px solid black;
+  margin-left: 2em;
 }

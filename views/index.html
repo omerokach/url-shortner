@@ -3,12 +3,15 @@
 <html>
   <head>
     <title>URL Shortener</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="../public/favicon.ico" />
     <link href="./public/style.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-
+  
   <body>
-    <h1>URL Shortener Microservice</h1>
+    <h1>URL Shortener</h1>
     <main>
       <section>
         <form action="api/shorturl/new" method="POST">
@@ -16,18 +19,38 @@
             <legend>URL Shortener</legend>
             <label for="url_input">URL:</label>
             <input
-              id="url_input"
-              type="text"
-              name="url"
-              placeholder="https://www.freecodecamp.org/"
+            id="url_input"
+            type="text"
+            name="url"
+            placeholder="https://www.example.com/"
             />
-            <input type="submit" value="POST URL" />
+            <input id="submit" type="submit" value="POST URL" />
+            <br>
+            <label for="ShortUrl_input">SHORT URL:</label>
+            <input
+            id="shortUrl_input"
+            type="text"
+            name="url"
+            placeholder="a1s23"
+            />
+            <input id="goToUrl" type="submit" value="GoTo URL" />
+            <div id="alertContainer"></div>
           </fieldset>
         </form>
       </section>
+      <table>
+        <thead>
+          <th>creation date -</th>
+          <th>num of redirect -</th>
+          <th>url -</th>
+          <th>short url</th>
+        </thead>
+      </table>
     </main>
     <footer>
-      <p>By <a href="https://www.freecodecamp.org/">freeCodeCamp</a></p>
+      <p>By <a href="https://github.com/omerokach" style="text-decoration: none;">omer rokach</a></p>
     </footer>
+    <script src="../public/main.js"></script>
   </body>
-</html>
+  </html>
+  
